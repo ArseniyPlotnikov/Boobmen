@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 #include <cmath>
+#include <ctime>
+#include <stdlib.h>
 using namespace std;
 
 int main()
@@ -13,7 +15,7 @@ int main()
         printf ("Ошибка ввода n");
         return 1;
     }
-    /*at - переменная для автоматического содания массива arr[20] = {1, 2 ,3, ...20}*/
+    /*at - переменная для автоматического содания массива arr[n] = {1, 2 ,3, ...20}*/
     int at;
     printf ("Создать массив автоматически от 1 до %d?", n);
     printf (" Введите цифру 1, если да: ");
@@ -21,12 +23,13 @@ int main()
     if (at == 1) {
         printf ("Ваш массив: ");
         printf ("\n");
+        srand(static_cast<unsigned int>(time(nullptr)));
         for (int i = 0; i < n; i++) {
-            arr [i] = i + 1;
+            arr[i] = rand() % 100;
         }
         for (int i = 0; i < n; i++) {
-        printf ("%d ", arr[i]);
-    }
+            printf ("%d ", arr[i]);
+        }
     }
     else {
         if (n == 1) {
