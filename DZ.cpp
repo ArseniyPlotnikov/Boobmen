@@ -90,7 +90,7 @@ int main()
     /*Сортировка 1 массива по возрастанию*/
     printf ("\nСортировка массива 1 по возрастанию: ");
     int temp; //Временная переменная
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < n-i; j++) {
             if (arr[j] > arr[j+1]) {
                 temp = arr[j];
@@ -105,8 +105,8 @@ int main()
     /*Сортировка массива по убыванию*/
     printf ("\nСортировка массива 1 по убыванию: ");
     int tic;
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j <n-1; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <n-i; j++) {
             if (arr[j] < arr[j+1]) {
                 tic = arr[j];
                 arr[j] = arr[j+1];
