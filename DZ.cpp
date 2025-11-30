@@ -1,119 +1,74 @@
-#include <iostream>
-#include <math.h>
-#include <cmath>
-#include <ctime>
-#include <stdlib.h>
-using namespace std;
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
+#define MAX_SIZE 1000
+
+void dec(int n) {
+    for (int i = 0; i != n; i++) {
+        printf("-");
+    }
+    printf("\n");
+}
 int main()
 {   
-    int arr[20];
-    int n;
-    printf ("Введите кол-во элементов массива: ");
-    scanf ("%d", &n);
-    if (n>20 || n <= 0) {
-        printf ("Ошибка ввода n");
-        return 1;
-    }
-    int at;
-    printf ("Создать массив автоматически от 1 до %d?", n);
-    printf (" Введите цифру 1, если да: ");
-    scanf ("%d", &at);
-    if (at == 1) {
-        printf ("Ваш массив: ");
-        printf ("\n");
-        srand(static_cast<unsigned int>(time(nullptr)));
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand() % 100;
+    dec (30);
+    bool running = true;
+    char arr[MAX_SIZE][MAX_SIZE];
+    while (running)
+    {   
+        printf("a. Create a text file\nb. Output file contents\nc. Count the number of words in each line\nd. Write the line with the most words to another file\ne. Exit\n");
+        printf ("Enter command: ");
+        char answer;
+        scanf("%c", &answer);
+        if (answer == 'e') {
+            running = false;
+            dec(30);
         }
-        for (int i = 0; i < n; i++) {
-            printf ("%d ", arr[i]);
-        }
-    }
-    else {
-        if (n == 1) {
-            printf ("Введите %d число: ", n);
-        }
-        if (n ==2 || n == 3 ||n == 4) {
-            printf ("Введите %d числа: ", n);
-        }
-        if (n != 1 && n != 2 && n != 3 && n !=4) {
-            printf ("Введите %d чисел: ", n);
-        }
-        for (int i = 0; i < n; i++) {
-            printf ("Введите %d элемент: ", i+1);
-            scanf ("%d", &arr[i]);
-        }
-        printf ("\nВаш массив: ");
-        for (int i = 0; i < n; i++) {
-        printf ("%d ", arr[i]);
-    }
-    }
-    printf ("\n\n");
-    int minValue = arr[0], maxValue = arr[0], minIndex, maxIndex = 0;
-    for (int i = 1; i < n; i++) {
-        if (arr[i] <= minValue) {
-            minValue = arr[i];
-            minIndex = i;
+        if (answer == 'a') {
+            int n;    
+            printf ("Enter n: ");
+            scanf ("%d", &n);
+            printf("Enter str: \n");
+            FILE *fw = fopen("string.txt", "w");
+            if (!fw) {
+                printf("Error opening file!\n");
+                continue;
+            }
+            for (int i = 0; i < n; i++) {
+                printf("Enter line %d: ", i + 1);
+                fgets(arr[i], MAX_SIZE, stdin);
+                arr[i][strcspn(arr[i], "\n")] = 0;
+                fprintf(fw, "%s\n", arr[i]);
+            }
+            fclose(fw);
+            printf("File created successfully.\n");
+            dec(30);
         } 
-        if (arr[i] > maxValue) {
-            maxValue = arr[i];
-            maxIndex = i;
+        if (answer == 'b') {
+            FILE *fr = fopen("string.txt", "r");
+            if (!fr) {
+                printf("File not found! Create it first.\n");
+                continue;
+            }
+            int m = 0;
+            while (fgets(arr[m], MAX_SIZE, fr)) {
+                arr[m][strcspn(arr[m], "\n")] = 0;
+                m++;
+            }
+            fclose(fr);
+            printf("Your str: ");
+            for (int i = 0; i < m; i++) {
+                printf("%s\n", arr[i]);
+            }
+            dec(30);
         }
-    }
-    arr[minIndex] = maxValue;
-    arr[maxIndex] = minValue;
+        if (answer == 'c') {
+            
+        }
+        if (answer == 'd') {
 
-    printf ("Ваш массив, если поменять самый большой и самый маленький элемент местами: ");
-    for (int i = 0; i < n; i++) {
-       printf ("%d ", arr[i]);
-    }
-    int arr2[20], j = 0;
-    for (int i = 0; i < n; i++) {
-        if (arr[i] % 3 == 0 || arr[i] % 5 == 0) {
-            arr2[j] = arr[i];
-            j++;
         }
-    }
-    if (j == 0) {
-        printf ("\nВ вашем массиве нет элементов, которые делятся на 3 или 5");
-    }
-    else {
-        printf ("\nНовый массив, состоящий из элементов массива 1, которые делятся на 3 или 5: ");
-        for (int i = 0; i < j; i ++) {
-            printf ("%d ", arr2[i]);
-        }   
-     }
-    printf ("\n\n");
-    /*Сортировка 1 массива по возрастанию*/
-    printf ("\nСортировка массива 1 по возрастанию: ");
-    int temp; //Временная переменная
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n-i; j++) {
-            if (arr[j] > arr[j+1]) {
-                temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
-            }
-        }
-    }
-    for (int i = 0; i < n; i++) {
-        printf ("%d ", arr[i]);
-    }
-    /*Сортировка массива по убыванию*/
-    printf ("\nСортировка массива 1 по убыванию: ");
-    int tic;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j <n-i; j++) {
-            if (arr[j] < arr[j+1]) {
-                tic = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = tic;
-            }
-        }
-    }
-    for (int i = 0; i < n; i++) {
-        printf ("%d ", arr[i]);
     }
     return 0;
 }
